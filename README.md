@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/Rayanekachbi/menuswipe?include_prereleases)](https://github.com/Rayanekachbi/menuswipe/releases)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![codecov](https://codecov.io/gh/Rayanekachbi/menuswipe/graph/badge.svg)](https://codecov.io/gh/Rayanekachbi/menuswipe)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=SONAR_KEY&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SONAR_KEY)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=Rayanekachbi_menuswipe&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Rayanekachbi_menuswipe)
 
 Projet M1 MIAGE Apprentissage. **Page de projet : https://rayanekachbi.github.io/menuswipe/** · Le dossier de projet est dans [`doc/dossier.md`](doc/dossier.md), les règles de travail avec l'IA dans [`CLAUDE.md`](CLAUDE.md).
 
