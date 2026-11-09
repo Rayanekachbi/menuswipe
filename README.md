@@ -1,13 +1,13 @@
 # MenuSwipe
 
-<!-- Remplacer ORG/REPO et SONAR_KEY une fois le dépôt créé -->
-[![CI](https://github.com/ORG/REPO/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ORG/REPO/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/ORG/REPO?include_prereleases)](https://github.com/ORG/REPO/releases)
+<!-- SONAR_KEY sera renseigné lors de la configuration de SonarCloud -->
+[![CI](https://github.com/Rayanekachbi/menuswipe/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Rayanekachbi/menuswipe/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Rayanekachbi/menuswipe?include_prereleases)](https://github.com/Rayanekachbi/menuswipe/releases)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![codecov](https://codecov.io/gh/ORG/REPO/graph/badge.svg)](https://codecov.io/gh/ORG/REPO)
+[![codecov](https://codecov.io/gh/Rayanekachbi/menuswipe/graph/badge.svg)](https://codecov.io/gh/Rayanekachbi/menuswipe)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=SONAR_KEY&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SONAR_KEY)
 
-Projet M1 MIAGE Apprentissage. **Page de projet : https://ORG.github.io/REPO/** · Le dossier de projet est dans [`doc/dossier.md`](doc/dossier.md), les règles de travail avec l'IA dans [`CLAUDE.md`](CLAUDE.md).
+Projet M1 MIAGE Apprentissage. **Page de projet : https://rayanekachbi.github.io/menuswipe/** · Le dossier de projet est dans [`doc/dossier.md`](doc/dossier.md), les règles de travail avec l'IA dans [`CLAUDE.md`](CLAUDE.md).
 
 ## Démarrage (dépôt modèle)
 
