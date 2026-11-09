@@ -1,5 +1,5 @@
 ---
-title: "NOM DU PROJET"
+title: "MenuSwipe"
 subtitle: "Dossier de lancement — M1 MIAGE Apprentissage — v0.1.0-SNAPSHOT"
 author:
   - Prénom NOM, Prénom NOM, Prénom NOM, Prénom NOM

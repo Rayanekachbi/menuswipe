@@ -1,4 +1,4 @@
-# NOM DU PROJET
+# MenuSwipe
 
 <!-- Remplacer ORG/REPO et SONAR_KEY une fois le dépôt créé -->
 [![CI](https://github.com/ORG/REPO/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ORG/REPO/actions/workflows/ci.yml)
@@ -50,7 +50,7 @@ Front → **API REST** → **Back** → **BD**
 | Qualité | JUnit 5, AssertJ, ArchUnit, JaCoCo, Codecov, SonarCloud, GitHub Actions |
 
 ```
-src/main/java/fr/miage/projet/
+src/main/java/fr/miage/menuswipe/
 ├── api/                             endpoint technique /api/v1/info
 ├── config/                          configuration transverse (CORS)
 └── <module>/                        un domaine fonctionnel = un module (ex. exemple/)
