@@ -17,9 +17,3 @@ async function appeler(chemin, options = {}) {
 const envoyer = (methode, chemin, corps) => appeler(chemin, { method: methode, body: JSON.stringify(corps) });
 
 export const info = () => appeler('/info');
-
-// DEBUT EXEMPLE (module exemple, à supprimer)
-export const listerNotes = () => appeler('/notes');
-export const creerNote = (note) => envoyer('POST', '/notes', note);
-export const motsFrequents = (id, k) => appeler(`/notes/${id}/mots-frequents?k=${k}`);
-// FIN EXEMPLE

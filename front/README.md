@@ -7,4 +7,4 @@ Client web statique (HTML, CSS, JavaScript natif), sans étape de build. Il ne c
 python3 -m http.server 8000 -d front                           # front, sur l'origine autorisée par le CORS du back
 ```
 
-Puis ouvrir http://localhost:8000. Une section par module (`exemple.js` est à supprimer). Le choix du front est libre (web, natif, CLI) : remplacez ce dossier si besoin, la seule règle est de ne passer que par l'API.
+Puis ouvrir http://localhost:8000. Une section par module. Le choix du front est libre (web, natif, CLI) : remplacez ce dossier si besoin, la seule règle est de ne passer que par l'API.

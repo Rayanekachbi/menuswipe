@@ -67,8 +67,8 @@ jacocoTestReport {
 // renseigner sonarProjectKey / sonarOrganization dans gradle.properties
 sonar {
 	properties {
-		property 'sonar.projectKey', findProperty('sonarProjectKey') ?: 'CHANGE_ME'
-		property 'sonar.organization', findProperty('sonarOrganization') ?: 'CHANGE_ME'
+		property 'sonar.projectKey', findProperty('sonarProjectKey') ?: 'Rayanekachbi_menuswipe'
+		property 'sonar.organization', findProperty('sonarOrganization') ?: 'rayanekachbi'
 		property 'sonar.host.url', 'https://sonarcloud.io'
 		property 'sonar.coverage.jacoco.xmlReportPaths', "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
 	}
