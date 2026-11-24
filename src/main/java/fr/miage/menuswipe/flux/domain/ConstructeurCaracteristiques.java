@@ -45,12 +45,20 @@ public final class ConstructeurCaracteristiques {
         this.ingredientsConnus = Set.copyOf(identifiants);
     }
 
+    /**
+     * Construit les caractéristiques d'une recette.
+     *
+     * Le second ensemble contient les ingrédients distincts des recettes
+     * aimées par l'utilisateur pendant les sept derniers jours.
+     * La sélection des réactions par date est effectuée en amont.
+     */
     public VecteurCaracteristiques construire(
             Set<String> ingredientsRecette,
-            Set<String> ingredientsMenu
+            Set<String> ingredientsRecettesAimeesRecemment
     ) {
         Set<String> recette = copierIngredients(ingredientsRecette);
-        Set<String> menu = copierIngredients(ingredientsMenu);
+        Set<String> ingredientsRecents =
+                copierIngredients(ingredientsRecettesAimeesRecemment);
 
         if (recette.isEmpty()) {
             throw new IllegalArgumentException(
@@ -75,15 +83,15 @@ public final class ConstructeurCaracteristiques {
         int nombreIngredientsCommuns = 0;
 
         for (String ingredientId : recette) {
-            if (menu.contains(ingredientId)) {
+            if (ingredientsRecents.contains(ingredientId)) {
                 nombreIngredientsCommuns++;
             }
         }
 
-        double lienMenu =
+        double lienSemaine =
                 (double) nombreIngredientsCommuns / recette.size();
 
-        valeurs[valeurs.length - 1] = lienMenu;
+        valeurs[valeurs.length - 1] = lienSemaine;
 
         return new VecteurCaracteristiques(
                 versionDictionnaire,

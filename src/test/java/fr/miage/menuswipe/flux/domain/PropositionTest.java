@@ -18,12 +18,11 @@ class PropositionTest {
             );
 
     @Test
-    void accepteUnePropositionComplete() {
+    void accepteUnePropositionSansMenu() {
         Proposition proposition = new Proposition(
                 "proposition-1",
                 "utilisateur-1",
                 "recette-1",
-                "menu-1",
                 DATE,
                 CARACTERISTIQUES
         );
@@ -36,8 +35,7 @@ class PropositionTest {
                 () -> assertEquals(
                         "recette-1", proposition.recetteId()),
                 () -> assertEquals(
-                        "menu-1", proposition.menuId()),
-                () -> assertEquals(DATE, proposition.dateProposition()),
+                        DATE, proposition.dateProposition()),
                 () -> assertEquals(
                         CARACTERISTIQUES, proposition.caracteristiques())
         );
@@ -52,30 +50,29 @@ class PropositionTest {
                     () -> assertThrows(
                             IllegalArgumentException.class,
                             () -> new Proposition(
-                                    identifiant, "utilisateur-1",
-                                    "recette-1", "menu-1",
-                                    DATE, CARACTERISTIQUES)
+                                    identifiant,
+                                    "utilisateur-1",
+                                    "recette-1",
+                                    DATE,
+                                    CARACTERISTIQUES)
                     ),
                     () -> assertThrows(
                             IllegalArgumentException.class,
                             () -> new Proposition(
-                                    "proposition-1", identifiant,
-                                    "recette-1", "menu-1",
-                                    DATE, CARACTERISTIQUES)
+                                    "proposition-1",
+                                    identifiant,
+                                    "recette-1",
+                                    DATE,
+                                    CARACTERISTIQUES)
                     ),
                     () -> assertThrows(
                             IllegalArgumentException.class,
                             () -> new Proposition(
-                                    "proposition-1", "utilisateur-1",
-                                    identifiant, "menu-1",
-                                    DATE, CARACTERISTIQUES)
-                    ),
-                    () -> assertThrows(
-                            IllegalArgumentException.class,
-                            () -> new Proposition(
-                                    "proposition-1", "utilisateur-1",
-                                    "recette-1", identifiant,
-                                    DATE, CARACTERISTIQUES)
+                                    "proposition-1",
+                                    "utilisateur-1",
+                                    identifiant,
+                                    DATE,
+                                    CARACTERISTIQUES)
                     )
             );
         }
@@ -86,9 +83,11 @@ class PropositionTest {
         assertThrows(
                 NullPointerException.class,
                 () -> new Proposition(
-                        "proposition-1", "utilisateur-1",
-                        "recette-1", "menu-1",
-                        null, CARACTERISTIQUES)
+                        "proposition-1",
+                        "utilisateur-1",
+                        "recette-1",
+                        null,
+                        CARACTERISTIQUES)
         );
     }
 
@@ -97,9 +96,11 @@ class PropositionTest {
         assertThrows(
                 NullPointerException.class,
                 () -> new Proposition(
-                        "proposition-1", "utilisateur-1",
-                        "recette-1", "menu-1",
-                        DATE, null)
+                        "proposition-1",
+                        "utilisateur-1",
+                        "recette-1",
+                        DATE,
+                        null)
         );
     }
 }

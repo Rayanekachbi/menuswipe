@@ -8,15 +8,19 @@ class CalculateurLinUcbTest {
 
     private static final double PRECISION = 1e-10;
 
+    private static final String VERSION =
+            "ingredients-lien-semaine-v1";
+
+    // Vecteur synthétique utilisé pour vérifier les calculs numériques.
     private static final VecteurCaracteristiques X =
             new VecteurCaracteristiques(
-                    "ingredients-v1",
+                    VERSION,
                     new double[]{1, 1, 0.5}
             );
 
     @Test
     void sansHistoriqueLEstimationEstNulleEtLeBonusEstCalcule() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0);
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0);
         CalculateurLinUcb calculateur = new CalculateurLinUcb(etat, 1.0);
 
         ScoreLinUcb score = calculateur.evaluer(X);
@@ -30,7 +34,7 @@ class CalculateurLinUcbTest {
 
     @Test
     void apresAimeLeScoreCorrespondAuCalculAttendu() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0)
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0)
                 .apresReaction(X, TypeReaction.AIME);
 
         ScoreLinUcb score = new CalculateurLinUcb(etat, 1.0).evaluer(X);
@@ -53,7 +57,7 @@ class CalculateurLinUcbTest {
     @Test
     void apresAimePuisPasseLEstimationEtLeBonusDiminuent() {
         EtatLinUcb apresAime =
-                new EtatLinUcb("ingredients-v1", 3, 1.0)
+                new EtatLinUcb(VERSION, 3, 1.0)
                         .apresReaction(X, TypeReaction.AIME);
 
         EtatLinUcb apresPasse =
@@ -77,12 +81,12 @@ class CalculateurLinUcbTest {
 
     @Test
     void uneObservationInfluenceUneAutreRecette() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0)
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0)
                 .apresReaction(X, TypeReaction.AIME);
 
         VecteurCaracteristiques autreRecette =
                 new VecteurCaracteristiques(
-                        "ingredients-v1",
+                        VERSION,
                         new double[]{1, 0, 1}
                 );
 
@@ -99,7 +103,7 @@ class CalculateurLinUcbTest {
 
     @Test
     void alphaNulSupprimeLeBonus() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0)
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0)
                 .apresReaction(X, TypeReaction.AIME);
 
         ScoreLinUcb score = new CalculateurLinUcb(etat, 0.0).evaluer(X);
@@ -115,7 +119,7 @@ class CalculateurLinUcbTest {
 
     @Test
     void tientCompteDeLambdaEtAlpha() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 2.0);
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 2.0);
 
         ScoreLinUcb score = new CalculateurLinUcb(etat, 0.5).evaluer(X);
 
@@ -130,7 +134,7 @@ class CalculateurLinUcbTest {
 
     @Test
     void refuseUnAlphaInvalide() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0);
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0);
 
         double[] valeursInvalides = {
                 -1,
@@ -149,18 +153,18 @@ class CalculateurLinUcbTest {
 
     @Test
     void refuseLesCaracteristiquesIncompatibles() {
-        EtatLinUcb etat = new EtatLinUcb("ingredients-v1", 3, 1.0);
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0);
         CalculateurLinUcb calculateur = new CalculateurLinUcb(etat, 1.0);
 
         VecteurCaracteristiques autreVersion =
                 new VecteurCaracteristiques(
-                        "ingredients-v2",
+                        "autre-version",
                         new double[]{1, 1, 0.5}
                 );
 
         VecteurCaracteristiques autreDimension =
                 new VecteurCaracteristiques(
-                        "ingredients-v1",
+                        VERSION,
                         new double[]{1, 1, 0, 0.5}
                 );
 
@@ -171,6 +175,127 @@ class CalculateurLinUcbTest {
                 () -> assertThrows(
                         IllegalArgumentException.class,
                         () -> calculateur.evaluer(autreDimension))
+        );
+    }
+
+    @Test
+    void sansHistoriqueLEstimationSansLienSemaineEstNulle() {
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0);
+        CalculateurLinUcb calculateur = new CalculateurLinUcb(etat, 1.0);
+
+        double estimation = calculateur.estimerSansLienSemaine(X);
+
+        assertEquals(0.0, estimation, PRECISION);
+    }
+
+    @Test
+    void estimeSansLienSemaineSansModifierLeVecteurNiLeScoreDuFlux() {
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0)
+                .apresReaction(X, TypeReaction.AIME);
+
+        CalculateurLinUcb calculateur = new CalculateurLinUcb(etat, 1.0);
+
+        double[] valeursAvant = X.copieValeurs();
+        ScoreLinUcb scoreAvant = calculateur.evaluer(X);
+
+        double estimation = calculateur.estimerSansLienSemaine(X);
+
+        ScoreLinUcb scoreApres = calculateur.evaluer(X);
+
+        assertAll(
+                () -> assertEquals(
+                        8.0 / 13.0, estimation, PRECISION),
+                () -> assertArrayEquals(
+                        valeursAvant, X.copieValeurs()),
+                () -> assertEquals(
+                        0.5, X.valeur(2), PRECISION),
+                () -> assertEquals(
+                        9.0 / 13.0, scoreApres.estimation(), PRECISION),
+                () -> assertEquals(
+                        scoreAvant.estimation(),
+                        scoreApres.estimation(),
+                        PRECISION),
+                () -> assertEquals(
+                        scoreAvant.bonus(),
+                        scoreApres.bonus(),
+                        PRECISION)
+        );
+    }
+
+    @Test
+    void estimationSansLienSemaineIgnoreAlphaEtLaValeurDuLien() {
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0)
+                .apresReaction(X, TypeReaction.AIME);
+
+        CalculateurLinUcb sansExploration =
+                new CalculateurLinUcb(etat, 0.0);
+
+        CalculateurLinUcb forteExploration =
+                new CalculateurLinUcb(etat, 10.0);
+
+        VecteurCaracteristiques lienNul =
+                new VecteurCaracteristiques(
+                        VERSION,
+                        new double[]{1, 1, 0}
+                );
+
+        VecteurCaracteristiques lienMaximal =
+                new VecteurCaracteristiques(
+                        VERSION,
+                        new double[]{1, 1, 1}
+                );
+
+        double estimationAttendue = 8.0 / 13.0;
+
+        assertAll(
+                () -> assertEquals(
+                        estimationAttendue,
+                        sansExploration.estimerSansLienSemaine(lienNul),
+                        PRECISION),
+                () -> assertEquals(
+                        estimationAttendue,
+                        sansExploration.estimerSansLienSemaine(lienMaximal),
+                        PRECISION),
+                () -> assertEquals(
+                        estimationAttendue,
+                        forteExploration.estimerSansLienSemaine(lienNul),
+                        PRECISION),
+                () -> assertEquals(
+                        estimationAttendue,
+                        forteExploration.estimerSansLienSemaine(lienMaximal),
+                        PRECISION)
+        );
+    }
+
+    @Test
+    void estimationSansLienSemaineRefuseLesEntreesInvalides() {
+        EtatLinUcb etat = new EtatLinUcb(VERSION, 3, 1.0);
+        CalculateurLinUcb calculateur = new CalculateurLinUcb(etat, 1.0);
+
+        VecteurCaracteristiques autreVersion =
+                new VecteurCaracteristiques(
+                        "autre-version",
+                        new double[]{1, 1, 0.5}
+                );
+
+        VecteurCaracteristiques autreDimension =
+                new VecteurCaracteristiques(
+                        VERSION,
+                        new double[]{1, 1, 0, 0.5}
+                );
+
+        assertAll(
+                () -> assertThrows(
+                        NullPointerException.class,
+                        () -> calculateur.estimerSansLienSemaine(null)),
+                () -> assertThrows(
+                        IllegalArgumentException.class,
+                        () -> calculateur.estimerSansLienSemaine(
+                                autreVersion)),
+                () -> assertThrows(
+                        IllegalArgumentException.class,
+                        () -> calculateur.estimerSansLienSemaine(
+                                autreDimension))
         );
     }
 }

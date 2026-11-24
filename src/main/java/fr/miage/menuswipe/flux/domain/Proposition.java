@@ -7,7 +7,6 @@ public record Proposition(
         String propositionId,
         String utilisateurId,
         String recetteId,
-        String menuId,
         Instant dateProposition,
         VecteurCaracteristiques caracteristiques
 ) {
@@ -16,7 +15,6 @@ public record Proposition(
         verifierIdentifiant(propositionId, "proposition");
         verifierIdentifiant(utilisateurId, "utilisateur");
         verifierIdentifiant(recetteId, "recette");
-        verifierIdentifiant(menuId, "menu");
 
         Objects.requireNonNull(
                 dateProposition,

@@ -6,16 +6,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VecteurCaracteristiquesTest {
 
+    private static final String VERSION =
+            "ingredients-lien-semaine-v1";
+
     @Test
     void conserveLesCaracteristiquesEtLaVersion() {
         double[] valeurs = {1, 1, 1, 0, 0.5};
 
         VecteurCaracteristiques vecteur =
-                new VecteurCaracteristiques("ingredients-v1", valeurs);
+                new VecteurCaracteristiques(VERSION, valeurs);
 
         assertAll(
                 () -> assertEquals(
-                        "ingredients-v1", vecteur.versionDictionnaire()),
+                        VERSION, vecteur.versionDictionnaire()),
                 () -> assertEquals(5, vecteur.dimension()),
                 () -> assertEquals(0.5, vecteur.valeur(4)),
                 () -> assertArrayEquals(
@@ -24,17 +27,17 @@ class VecteurCaracteristiquesTest {
     }
 
     @Test
-    void accepteLesBornesDuLienAvecLeMenu() {
+    void accepteLesBornesDuLienSemaine() {
         assertAll(
                 () -> assertDoesNotThrow(
                         () -> new VecteurCaracteristiques(
-                                "ingredients-v1",
+                                VERSION,
                                 new double[]{1, 1, 0}
                         )
                 ),
                 () -> assertDoesNotThrow(
                         () -> new VecteurCaracteristiques(
-                                "ingredients-v1",
+                                VERSION,
                                 new double[]{1, 1, 1}
                         )
                 )
@@ -46,7 +49,7 @@ class VecteurCaracteristiquesTest {
         double[] valeurs = {1, 1, 0.5};
 
         VecteurCaracteristiques vecteur =
-                new VecteurCaracteristiques("ingredients-v1", valeurs);
+                new VecteurCaracteristiques(VERSION, valeurs);
 
         valeurs[1] = 0;
         valeurs[2] = 0;
@@ -61,7 +64,7 @@ class VecteurCaracteristiquesTest {
     void uneModificationDeLaCopieNeChangePasLeVecteur() {
         VecteurCaracteristiques vecteur =
                 new VecteurCaracteristiques(
-                        "ingredients-v1",
+                        VERSION,
                         new double[]{1, 1, 0.5}
                 );
 
@@ -100,8 +103,8 @@ class VecteurCaracteristiquesTest {
                 {1, 0.5, 0.5},     // Indicateur non binaire.
                 {1, -1, 0.5},      // Indicateur négatif.
                 {1, 2, 0.5},       // Indicateur supérieur à 1.
-                {1, 1, -0.1},      // Lien avec le menu négatif.
-                {1, 1, 1.1},       // Lien avec le menu supérieur à 1.
+                {1, 1, -0.1},      // LienSemaine négatif.
+                {1, 1, 1.1},       // LienSemaine supérieur à 1.
                 {Double.NaN, 1, 0},
                 {1, Double.NaN, 0},
                 {1, 1, Double.NaN},
@@ -113,7 +116,7 @@ class VecteurCaracteristiquesTest {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> new VecteurCaracteristiques(
-                            "ingredients-v1",
+                            VERSION,
                             valeurs
                     )
             );

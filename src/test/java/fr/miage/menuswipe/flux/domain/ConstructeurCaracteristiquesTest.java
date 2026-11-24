@@ -10,34 +10,42 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConstructeurCaracteristiquesTest {
 
+    private static final String VERSION =
+            "ingredients-lien-semaine-v1";
+
+    private static final double TOLERANCE = 1e-12;
+
     private final ConstructeurCaracteristiques constructeur =
             new ConstructeurCaracteristiques(
-                    "ingredients-v1",
+                    VERSION,
                     List.of("pates", "champignons", "oeufs")
             );
 
     @Test
     void construitLeVecteurAvecUnIngredientCommunSurDeux() {
+        Set<String> ingredientsRecettesAimeesRecemment =
+                Set.of("oeufs", "champignons");
+
         VecteurCaracteristiques resultat = constructeur.construire(
                 Set.of("pates", "champignons"),
-                Set.of("oeufs", "champignons")
+                ingredientsRecettesAimeesRecemment
         );
 
         assertAll(
                 () -> assertArrayEquals(
                         new double[]{1, 1, 1, 0, 0.5},
                         resultat.copieValeurs(),
-                        1e-12
+                        TOLERANCE
                 ),
                 () -> assertEquals(
-                        "ingredients-v1",
+                        VERSION,
                         resultat.versionDictionnaire()
                 )
         );
     }
 
     @Test
-    void unMenuVideDonneUnLienNul() {
+    void sansIngredientsDeRecettesAimeesRecemmentLeLienEstNul() {
         VecteurCaracteristiques resultat = constructeur.construire(
                 Set.of("pates", "champignons"),
                 Set.of()
@@ -46,7 +54,7 @@ class ConstructeurCaracteristiquesTest {
         assertArrayEquals(
                 new double[]{1, 1, 1, 0, 0},
                 resultat.copieValeurs(),
-                1e-12
+                TOLERANCE
         );
     }
 
@@ -57,7 +65,7 @@ class ConstructeurCaracteristiquesTest {
                 Set.of("pates", "champignons", "oeufs")
         );
 
-        assertEquals(1.0, resultat.valeur(4), 1e-12);
+        assertEquals(1.0, resultat.valeur(4), TOLERANCE);
     }
 
     @Test
@@ -67,7 +75,34 @@ class ConstructeurCaracteristiquesTest {
                 Set.of("champignons", "tomates", "riz", "carottes")
         );
 
-        assertEquals(1.0 / 3.0, resultat.valeur(4), 1e-12);
+        assertEquals(1.0 / 3.0, resultat.valeur(4), TOLERANCE);
+    }
+
+    @Test
+    void leGratinPartageDeuxIngredientsSurTroisAvecLaCarbonaraAimee() {
+        ConstructeurCaracteristiques constructeurExemple =
+                new ConstructeurCaracteristiques(
+                        VERSION,
+                        List.of("pates", "creme", "lardons", "fromage")
+                );
+
+        Set<String> ingredientsGratin =
+                Set.of("pates", "creme", "fromage");
+
+        Set<String> ingredientsRecettesAimeesRecemment =
+                Set.of("pates", "creme", "lardons");
+
+        VecteurCaracteristiques resultat =
+                constructeurExemple.construire(
+                        ingredientsGratin,
+                        ingredientsRecettesAimeesRecemment
+                );
+
+        assertArrayEquals(
+                new double[]{1, 1, 1, 0, 1, 2.0 / 3.0},
+                resultat.copieValeurs(),
+                TOLERANCE
+        );
     }
 
     @Test
@@ -78,7 +113,7 @@ class ConstructeurCaracteristiquesTest {
 
         ConstructeurCaracteristiques autreConstructeur =
                 new ConstructeurCaracteristiques(
-                        "ingredients-v2",
+                        "ingredients-lien-semaine-v2",
                         dictionnaire
                 );
 
@@ -92,7 +127,7 @@ class ConstructeurCaracteristiquesTest {
         assertArrayEquals(
                 new double[]{1, 0, 1, 1, 0.5},
                 resultat.copieValeurs(),
-                1e-12
+                TOLERANCE
         );
     }
 
@@ -123,7 +158,7 @@ class ConstructeurCaracteristiquesTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new ConstructeurCaracteristiques(
-                        "ingredients-v1",
+                        VERSION,
                         List.of("pates", "champignons", "pates")
                 )
         );

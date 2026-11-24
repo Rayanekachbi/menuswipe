@@ -37,7 +37,50 @@ public final class CalculateurLinUcb {
         this.theta = resoudreTranspose(y);
     }
 
+    /**
+     * Calcule le score de sélection de F1 :
+     * estimation avec le contexte fourni et bonus d'exploration.
+     */
     public ScoreLinUcb evaluer(VecteurCaracteristiques caracteristiques) {
+        verifierCompatibilite(caracteristiques);
+
+        double[] x = caracteristiques.copieValeurs();
+        double estimation = calculerEstimation(x);
+
+        // Si L × z = x, alors xᵀ A⁻¹ x = zᵀ z.
+        double[] z = resoudreInferieur(x);
+        double norme = 0.0;
+
+        for (double valeur : z) {
+            norme = Math.hypot(norme, valeur);
+        }
+
+        double bonus = verifierFini(alpha * norme);
+
+        return new ScoreLinUcb(estimation, bonus);
+    }
+
+    /**
+     * Calcule une estimation sans bonus d'exploration,
+     * en mettant lienSemaine à zéro sur une copie du vecteur.
+     *
+     * Le résultat est brut : il peut être inférieur à zéro
+     * ou supérieur à un.
+     */
+    public double estimerSansLienSemaine(
+            VecteurCaracteristiques caracteristiques
+    ) {
+        verifierCompatibilite(caracteristiques);
+
+        double[] x = caracteristiques.copieValeurs();
+        x[dimension - 1] = 0.0;
+
+        return calculerEstimation(x);
+    }
+
+    private void verifierCompatibilite(
+            VecteurCaracteristiques caracteristiques
+    ) {
         Objects.requireNonNull(
                 caracteristiques,
                 "Les caractéristiques sont obligatoires."
@@ -52,31 +95,20 @@ public final class CalculateurLinUcb {
         if (!versionDictionnaire.equals(
                 caracteristiques.versionDictionnaire())) {
             throw new IllegalArgumentException(
-                    "La version du dictionnaire ne correspond pas au modèle."
+                    "La version des caractéristiques "
+                            + "ne correspond pas au modèle."
             );
         }
+    }
 
-        double[] x = caracteristiques.copieValeurs();
-
+    private double calculerEstimation(double[] x) {
         double estimation = 0.0;
 
         for (int i = 0; i < dimension; i++) {
             estimation += x[i] * theta[i];
         }
 
-        estimation = verifierFini(estimation);
-
-        // Si L × z = x, alors xᵀ A⁻¹ x = zᵀ z.
-        double[] z = resoudreInferieur(x);
-        double norme = 0.0;
-
-        for (double valeur : z) {
-            norme = Math.hypot(norme, valeur);
-        }
-
-        double bonus = verifierFini(alpha * norme);
-
-        return new ScoreLinUcb(estimation, bonus);
+        return verifierFini(estimation);
     }
 
     private static double[][] factoriser(EtatLinUcb etat) {

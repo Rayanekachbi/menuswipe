@@ -12,7 +12,7 @@ public final class VecteurCaracteristiques {
         if (versionDictionnaire == null
                 || versionDictionnaire.isBlank()) {
             throw new IllegalArgumentException(
-                    "La version du dictionnaire est obligatoire."
+                    "La version des caractéristiques est obligatoire."
             );
         }
 
@@ -20,7 +20,7 @@ public final class VecteurCaracteristiques {
             throw new IllegalArgumentException(
                     "Le vecteur doit contenir une constante, "
                             + "au moins un indicateur d'ingrédient "
-                            + "et le lien avec le menu."
+                            + "et le lien avec les recettes aimées récemment."
             );
         }
 
@@ -48,11 +48,12 @@ public final class VecteurCaracteristiques {
             }
         }
 
-        double lienMenu = copie[copie.length - 1];
+        double lienSemaine = copie[copie.length - 1];
 
-        if (lienMenu < 0.0 || lienMenu > 1.0) {
+        if (lienSemaine < 0.0 || lienSemaine > 1.0) {
             throw new IllegalArgumentException(
-                    "Le lien avec le menu doit être compris entre 0 et 1."
+                    "Le lien avec les recettes aimées récemment "
+                            + "doit être compris entre 0 et 1."
             );
         }
 
@@ -60,6 +61,10 @@ public final class VecteurCaracteristiques {
         this.valeurs = copie;
     }
 
+    /**
+     * Identifie l'ordre des ingrédients et la définition
+     * des caractéristiques utilisées dans le vecteur.
+     */
     public String versionDictionnaire() {
         return versionDictionnaire;
     }
