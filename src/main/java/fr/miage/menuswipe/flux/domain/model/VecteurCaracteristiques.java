@@ -1,4 +1,4 @@
-package fr.miage.menuswipe.flux.domain;
+package fr.miage.menuswipe.flux.domain.model;
 
 public final class VecteurCaracteristiques {
 

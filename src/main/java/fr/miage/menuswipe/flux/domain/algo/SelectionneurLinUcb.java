@@ -1,10 +1,11 @@
-package fr.miage.menuswipe.flux.domain;
-
+package fr.miage.menuswipe.flux.domain.algo;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import fr.miage.menuswipe.flux.domain.model.EtatLinUcb;
+import fr.miage.menuswipe.flux.domain.model.RecetteCandidate;
 
 public final class SelectionneurLinUcb {
 

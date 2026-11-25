@@ -1,7 +1,8 @@
-package fr.miage.menuswipe.flux.domain;
-
+package fr.miage.menuswipe.flux.domain.algo;
 import java.util.Objects;
-
+import fr.miage.menuswipe.flux.domain.model.EtatLinUcb;
+import fr.miage.menuswipe.flux.domain.model.ScoreLinUcb;
+import fr.miage.menuswipe.flux.domain.model.VecteurCaracteristiques;
 public final class CalculateurLinUcb {
 
     private final String versionDictionnaire;

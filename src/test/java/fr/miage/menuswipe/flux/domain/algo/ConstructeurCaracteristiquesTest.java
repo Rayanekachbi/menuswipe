@@ -1,4 +1,5 @@
-package fr.miage.menuswipe.flux.domain;
+package fr.miage.menuswipe.flux.domain.algo;
+import fr.miage.menuswipe.flux.domain.model.VecteurCaracteristiques;
 
 import java.util.ArrayList;
 import java.util.List;

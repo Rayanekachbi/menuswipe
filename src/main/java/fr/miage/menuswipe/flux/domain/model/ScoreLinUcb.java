@@ -1,4 +1,4 @@
-package fr.miage.menuswipe.flux.domain;
+package fr.miage.menuswipe.flux.domain.model;
 
 public record ScoreLinUcb(double estimation, double bonus) {
 

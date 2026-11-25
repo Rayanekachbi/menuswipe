@@ -1,9 +1,8 @@
-package fr.miage.menuswipe.flux.domain;
-
+package fr.miage.menuswipe.flux.domain.algo;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import fr.miage.menuswipe.flux.domain.model.VecteurCaracteristiques;
 public final class ConstructeurCaracteristiques {
 
     private final String versionDictionnaire;

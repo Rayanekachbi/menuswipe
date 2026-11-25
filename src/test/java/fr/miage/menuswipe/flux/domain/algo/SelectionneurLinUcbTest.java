@@ -1,6 +1,11 @@
-package fr.miage.menuswipe.flux.domain;
+package fr.miage.menuswipe.flux.domain.algo;
+import fr.miage.menuswipe.flux.domain.model.EtatLinUcb;
+import fr.miage.menuswipe.flux.domain.model.RecetteCandidate;
+import fr.miage.menuswipe.flux.domain.model.TypeReaction;
+import fr.miage.menuswipe.flux.domain.model.VecteurCaracteristiques;
 
 import java.util.List;
+
 
 import org.junit.jupiter.api.Test;
 
